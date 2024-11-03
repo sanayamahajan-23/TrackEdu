@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     // Database URL, username, and password
-    private static final String URL = "jdbc:mysql://localhost:3306/signup"; // Replace with your database URL
+    private static final String URL = "jdbc:mysql://localhost:3306/users"; // Replace with your database URL
     private static final String USERNAME = "admin";                      // Replace with your DB username
     private static final String PASSWORD = "admin";                      // Replace with your DB password
 
