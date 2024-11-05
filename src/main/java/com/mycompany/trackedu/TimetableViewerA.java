@@ -11,7 +11,7 @@ package com.mycompany.trackedu;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.sql.*;
+import java.util.List;
 public class TimetableViewerA extends javax.swing.JFrame {
 
     /**
@@ -19,7 +19,7 @@ public class TimetableViewerA extends javax.swing.JFrame {
      */
       private JTable table;
     private DefaultTableModel model;
-    private Connection conn;
+   private TimetableDatabase db;
     public TimetableViewerA() {
         setTitle("Timetable Viewer");
         setSize(817, 477);
@@ -27,85 +27,35 @@ public class TimetableViewerA extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         // Initialize Database Connection
-        if (connectToDatabase()) {
-            // If connected, load the timetable data
-            initializeTableModel();
-            loadTimetableData();
-        } else {
-            // If database connection failed, show an error message
-            JOptionPane.showMessageDialog(this, "Failed to connect to the database.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        setVisible(true);
-    }
-
-    // Connect to the database
-    private boolean connectToDatabase() {
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/college", "root", "admin");
-            System.out.println("Database connected successfully.");
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Set up the table model
-    private void initializeTableModel() {
-        // Column headers
+        db = new TimetableDatabase();
+        // Initialize table with column names
         String[] columns = {"Time Slot", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-
-        // Create a non-editable model
-        model = new DefaultTableModel(columns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;  // Make cells non-editable
-            }
-        };
-
-        // Initialize table with model and add it to JScrollPane
+        model = new DefaultTableModel(columns, 0);
         table = new JTable(model);
-        table.setFillsViewportHeight(true);
+        table.setEnabled(false); // Make table non-editable
+
+        // Populate table with data
+        loadData();
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    // Load timetable data from the database into JTable
-    private void loadTimetableData() {
-       
-            try (Statement stmt = conn.createStatement()) {
-                ResultSet rs = stmt.executeQuery("SELECT * FROM timetableA");
-                
-                // Check if result set is empty
-                boolean hasData = false; // Track if data is loaded
-            while (rs.next()) {
-                hasData = true; // Set to true if at least one row is loaded
-                String[] row = {
-                    rs.getString("time_slot"),
-                    rs.getString("monday"),
-                    rs.getString("tuesday"),
-                    rs.getString("wednesday"),
-                    rs.getString("thursday"),
-                    rs.getString("friday")
-                };
-                model.addRow(row);
-                System.out.println("Row added: " + String.join(", ", row)); // Debug output
-            }
-            if (!hasData) {
-                JOptionPane.showMessageDialog(this, "No data found in timetableA table.", "Info", JOptionPane.INFORMATION_MESSAGE);
-            }
+    // Set up the table model
+    private void loadData() {
+        List<String[]> timetableData = db.getTimetableData();
 
-            // Ensure the table is displayed correctly
-            revalidate(); // Refresh the layout
-            repaint();    // Repaint the JFrame
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed to load data from the database.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (timetableData.isEmpty()) {
+            System.out.println("No data available to display.");
+        } else {
+            for (String[] row : timetableData) {
+                model.addRow(row);
+            }
+            System.out.println("Table loaded with " + timetableData.size() + " rows.");
         }
-    
-        
-        initComponents();
     }
+
+    // Load timetable data from the database into JTable
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -150,7 +100,8 @@ public class TimetableViewerA extends javax.swing.JFrame {
      */
      public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new TimetableViewerA().setVisible(true);
+            TimetableViewerA viewer = new TimetableViewerA();
+            viewer.setVisible(true);  // Ensure frame is set to visible
         });
     }
     
