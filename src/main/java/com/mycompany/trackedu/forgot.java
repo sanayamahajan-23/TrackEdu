@@ -30,7 +30,7 @@ public class forgot extends javax.swing.JFrame {
         initComponents();
         txtquestion.setEditable(false);
         try{
-        Class.forName("con.mysql.cj.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         con=DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "admin");
             }
         catch(ClassNotFoundException ex){
