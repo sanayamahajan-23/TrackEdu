@@ -24,13 +24,14 @@ public class forgot extends javax.swing.JFrame {
     
     /**
      * Creates new form forgot
+     * @throws java.sql.SQLException
      */
-    public forgot() {
+    public forgot() throws SQLException {
         initComponents();
         txtquestion.setEditable(false);
         try{
-        Class.forName("con.mysql.cj.jdbc.Driver");
-        //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/email", "root", "admin");
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "admin");
             }
         catch(ClassNotFoundException ex){
             Logger.getLogger(forgot.class.getName()).log(Level.SEVERE,null,ex);
@@ -217,7 +218,7 @@ public class forgot extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        //new login().setVisible(true);
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -231,11 +232,11 @@ public class forgot extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
             // TODO add your handling code here:
-            pst=con.prepareStatement("select sq from tablename where email=?");
+            pst=con.prepareStatement("SELECT security_question FROM users WHERE college_email=?");
             pst.setString(1, txtemail.getText());
             rs=pst.executeQuery();
             if(rs.next()){
-                txtquestion.setText(rs.getString("sq"));
+                txtquestion.setText(rs.getString("security_question"));
             }
             else{
                 JOptionPane.showMessageDialog(this, "sorry record not found");
@@ -248,14 +249,14 @@ public class forgot extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            pst=con.prepareStatement("select * from tablename where email=? and answer=?");
+            pst=con.prepareStatement("SELECT * FROM users WHERE college_email=? and security_answer=?");
             pst.setString(1, txtemail.getText());
             pst.setString(2, txtanswer.getText());
             rs=pst.executeQuery();
             if(rs.next()){
             try {
             // TODO add your handling code here:
-            pst=con.prepareStatement("update tablename set password=? where email=? and answer=?");
+            pst=con.prepareStatement("UPDATE users SET password=? WHERE college_email=? and security_answer=?");
             pst.setString(1, txtnewpass.getText());
             pst.setString(2, txtemail.getText());
             pst.setString(3, txtanswer.getText());
@@ -304,7 +305,11 @@ public class forgot extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new forgot().setVisible(true);
+                try {
+                    new forgot().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(forgot.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

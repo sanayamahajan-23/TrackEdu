@@ -22,14 +22,18 @@ public class updatepassword extends javax.swing.JFrame {
     /**
      * Creates new form updatepassword
      */
-    public updatepassword() {
+    public updatepassword() throws SQLException {
         initComponents();
-        try{
-        Class.forName("con.mysql.cj.jdbc.Driver");
-        //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/email", "root", "admin");
-            }
-        catch(ClassNotFoundException ex){
-            Logger.getLogger(forgot.class.getName()).log(Level.SEVERE,null,ex);
+        try {
+            // Corrected driver name
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "admin");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Database driver not found.");
+        } catch (SQLException ex) {
+            Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Database connection failed.");
         }
     }
 
@@ -216,9 +220,9 @@ public class updatepassword extends javax.swing.JFrame {
             return;
         }
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://DATABASE_URL", "USERNAME", "PASSWORD")) {
+        try  {
             // Verify old password
-            String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String query = "SELECT * FROM users WHERE college_email = ? AND password = ?";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, email);
             pst.setString(2, oldPassword);
@@ -226,8 +230,8 @@ public class updatepassword extends javax.swing.JFrame {
 
             if (rs.next()) {
                 // Update password
-                String updateQuery = "UPDATE users SET password = ? WHERE email = ?";
-                PreparedStatement updatePst = conn.prepareStatement(updateQuery);
+                String updateQuery = "UPDATE users SET password = ? WHERE college_email = ?";
+                PreparedStatement updatePst = con.prepareStatement(updateQuery);
                 updatePst.setString(1, newPassword);
                 updatePst.setString(2, email);
                 int rowsUpdated = updatePst.executeUpdate();
@@ -243,6 +247,7 @@ public class updatepassword extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
+             Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Database connection error.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -253,7 +258,7 @@ public class updatepassword extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        //new login().setVisible(true);
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -293,7 +298,11 @@ public class updatepassword extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new updatepassword().setVisible(true);
+            try {
+                new updatepassword().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 

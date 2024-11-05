@@ -4,6 +4,10 @@
  */
 package com.mycompany.trackedu;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author divya
@@ -11,7 +15,7 @@ package com.mycompany.trackedu;
 public class homet extends javax.swing.JFrame {
 
     /**
-     * Creates new form homet
+     * Creates new form 
      */
     public homet() {
         initComponents();
@@ -224,7 +228,12 @@ public class homet extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-         updatepassword update = new updatepassword();
+         updatepassword update = null;
+        try {
+            update = new updatepassword();
+        } catch (SQLException ex) {
+            Logger.getLogger(homet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         update.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed

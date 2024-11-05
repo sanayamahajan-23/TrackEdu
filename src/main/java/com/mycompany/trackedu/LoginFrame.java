@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class LoginFrame extends javax.swing.JFrame {
 
     /**
@@ -29,7 +31,11 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel3.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Change cursor to hand
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                try {
+                    jLabel3MouseClicked(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel3.setText("<html><u>Forgot Password?</u></html>"); // Underline text on hover
@@ -182,7 +188,7 @@ public class LoginFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
     }       
     }//GEN-LAST:event_jButton1ActionPerformed
-        private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {
+        private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) throws SQLException {
         // Open the Forgot Password Frame
         forgot forgotPasswordFrame = new forgot();
         forgotPasswordFrame.setVisible(true);
