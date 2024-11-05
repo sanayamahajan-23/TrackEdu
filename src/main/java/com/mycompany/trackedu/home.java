@@ -4,6 +4,10 @@
  */
 package com.mycompany.trackedu;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author divya
@@ -71,36 +75,9 @@ public class home extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-
-        popupMenu1.setLabel("popupMenu1");
-
-        popupMenu2.setLabel("popupMenu2");
-
-        popupMenu3.setLabel("popupMenu3");
-
-        menu1.setLabel("File");
-        menuBar1.add(menu1);
-
-        menu2.setLabel("Edit");
-        menuBar1.add(menu2);
-
-        popupMenu4.setLabel("popupMenu4");
-
-        jMenuItem1.setText("jMenuItem1");
-
-        jMenuItem2.setText("jMenuItem2");
-
-        jMenu1.setText("jMenu1");
-
-        jMenu2.setText("File");
-        jMenuBar2.add(jMenu2);
-
-        jMenu3.setText("Edit");
-        jMenuBar2.add(jMenu3);
-
-        jMenu4.setText("jMenu4");
-
-        jScrollPane1.setViewportView(jTextPane1);
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenu5.setText("File");
         jMenuBar3.add(jMenu5);
@@ -184,6 +161,11 @@ public class home extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Click here");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -191,9 +173,6 @@ public class home extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -212,20 +191,23 @@ public class home extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(194, 194, 194)
-                                .addComponent(jButton1)))))
+                                .addComponent(jButton1))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel1)))
                 .addContainerGap(270, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton5)
                         .addComponent(jLabel6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jButton1))
@@ -242,8 +224,28 @@ public class home extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jButton4))
                         .addGap(55, 55, 55)))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
+
+        jMenu1.setText("Menu");
+
+        jMenuItem1.setText("Update Password");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Logout");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -264,6 +266,34 @@ public class home extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        TopicStudentFrame topicstudentframe = new TopicStudentFrame();
+        topicstudentframe.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+           this.dispose(); // This will close the current homet frame
+    
+    // Open the login frame (assuming you have a LoginFrame class)
+    LoginFrame loginFrame = new LoginFrame(); // Create an instance of your login frame
+    loginFrame.setVisible(true); // Make the login frame visible
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        updatepassword update = null;
+        try {
+            update = new updatepassword();
+        } catch (SQLException ex) {
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        update.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,18 +363,9 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar5;
     private javax.swing.JMenuBar jMenuBar6;
     private javax.swing.JMenuBar jMenuBar7;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
-    private java.awt.Menu menu1;
-    private java.awt.Menu menu2;
-    private java.awt.MenuBar menuBar1;
-    private java.awt.PopupMenu popupMenu1;
-    private java.awt.PopupMenu popupMenu2;
-    private java.awt.PopupMenu popupMenu3;
-    private java.awt.PopupMenu popupMenu4;
     // End of variables declaration//GEN-END:variables
 }
