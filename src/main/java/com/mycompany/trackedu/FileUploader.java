@@ -8,18 +8,14 @@ package com.mycompany.trackedu;
  *
  * @author divya
  */
+import java.awt.FlowLayout;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 public class FileUploader extends javax.swing.JFrame {
- private JLabel fileLabel;
+ private JButton uploadButton, saveButton;
+    private JLabel fileLabel;
     private File selectedFile;
     /**
      * Creates new form FileUploader
@@ -28,96 +24,44 @@ public class FileUploader extends javax.swing.JFrame {
            setTitle("File Uploader");
         setSize(817, 478);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
-
-        // Label to show selected file
-        fileLabel = new JLabel("No file selected", SwingConstants.CENTER);
-        add(fileLabel, BorderLayout.CENTER);
-
-        // Buttons for uploading and saving the file
-        JPanel buttonPanel = new JPanel();
-        JButton uploadButton = new JButton("Upload File");
-        JButton saveButton = new JButton("Save to Database");
+        setLayout(new FlowLayout());
+        fileLabel = new JLabel("No file selected");
         
-        buttonPanel.add(uploadButton);
-        buttonPanel.add(saveButton);
-        add(buttonPanel, BorderLayout.SOUTH);
+        add(fileLabel);
 
-        // Action listener for Upload button
+        uploadButton = new JButton("Upload File");
+        uploadButton.setBounds(20, 60, 120, 30);
         uploadButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                uploadFile();
+                JFileChooser fileChooser = new JFileChooser();
+                int option = fileChooser.showOpenDialog(null);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    selectedFile = fileChooser.getSelectedFile();
+                    fileLabel.setText("File: " + selectedFile.getName());
+                }
             }
         });
 
         // Action listener for Save button
+         add(uploadButton);
+
+        saveButton = new JButton("Save File");
+        saveButton.setBounds(160, 60, 120, 30);
         saveButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                saveFileToDatabase();
+                if (selectedFile != null) {
+                    try {
+                        FileDatabaseHelper.saveFile(selectedFile.getName(), selectedFile);
+                        JOptionPane.showMessageDialog(null, "File saved successfully!");
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Error saving file: " + ex.getMessage());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No file selected!");
+                }
             }
         });
-    }
-
-    // Method to open file chooser and upload a file
-    private void uploadFile() {
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            selectedFile = fileChooser.getSelectedFile();
-            fileLabel.setText("Selected file: " + selectedFile.getName());
-
-            // Display image if it's an image file
-            if (isImageFile(selectedFile)) {
-                ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
-                fileLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
-            } else {
-                fileLabel.setIcon(null);
-            }
-        }
-    }
-
-    // Method to check if file is an image
-    private boolean isImageFile(File file) {
-        String fileName = file.getName().toLowerCase();
-        return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".gif") || fileName.endsWith(".pdf");
-    }
-
-    // Method to save the file to the database
-    private void saveFileToDatabase() {
-        if (selectedFile == null) {
-            JOptionPane.showMessageDialog(this, "No file selected!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String dbUrl = "jdbc:mysql://localhost:3306/file_storage";
-        String username = "root";
-        String password = "admin";
-
-        try (Connection conn = DriverManager.getConnection(dbUrl, username, password)) {
-            String query = "INSERT INTO uploaded_files (file_name, file_data) VALUES (?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, selectedFile.getName());
-
-            // Read file data as InputStream
-            InputStream inputStream = new FileInputStream(selectedFile);
-            pstmt.setBinaryStream(2, inputStream, (int) selectedFile.length());
-           int rowsInserted = pstmt.executeUpdate();
-
-        if (rowsInserted > 0) {
-            JOptionPane.showMessageDialog(this, "File saved to database successfully!");
-            System.out.println("File saved: " + selectedFile.getName() + ", Size: " + selectedFile.length());
-        } else {
-            System.out.println("File not saved.");
-        }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error saving file!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    
-        initComponents();
+        add(saveButton);
     }
 
     /**
@@ -135,11 +79,11 @@ public class FileUploader extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 857, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 482, Short.MAX_VALUE)
         );
 
         pack();
@@ -148,10 +92,10 @@ public class FileUploader extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            FileUploader fileUploader = new FileUploader();
-            fileUploader.setVisible(true);
+            FileUploader uploader = new FileUploader();
+            uploader.setVisible(true);
         });
     }
    

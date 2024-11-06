@@ -10,77 +10,68 @@ package com.mycompany.trackedu;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.awt.Desktop;
+import java.io.*;
+import java.nio.file.*;
+import java.sql.SQLException;
 public class FileViewer extends javax.swing.JFrame {
-    private JLabel fileLabel;
+    private JLabel linkLabel;
+    private static final String SAVE_DIRECTORY = System.getProperty("user.home") + "/Documents/ProjectFiles/";
     /**
      * Creates new form FileViewer
      */
     public FileViewer() {
         setTitle("File Viewer");
-        setSize(817, 478);
+        setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout());
 
-        fileLabel = new JLabel("No file to display", SwingConstants.CENTER);
-        add(fileLabel, BorderLayout.CENTER);
+        linkLabel = new JLabel();
+        linkLabel.setForeground(Color.BLUE.darker());
+        linkLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        linkLabel.setText("Click here to open the PDF");
 
-        loadFileFromDatabase();
+        add(linkLabel);
+        displayPDFLink();
     }
 
     // Method to load file from the database and display it
-    private void loadFileFromDatabase() {
-        String dbUrl = "jdbc:mysql://localhost:3306/file_storage";
-        String username = "root";
-        String password = "admin";
+     private void displayPDFLink() {
+        try {
+            // Retrieve the latest file from the database
+            String fileName = FileDatabaseHelper.getLatestFileName();
+            if (fileName != null && fileName.toLowerCase().endsWith(".pdf")) {
+                InputStream fileData = FileDatabaseHelper.getFileData(fileName);
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, username, password);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT file_name, file_data FROM uploaded_files ORDER BY id DESC LIMIT 1")) {
-
-            if (rs.next()) {
-                String fileName = rs.getString("file_name");
-                InputStream fileData = rs.getBinaryStream("file_data");
-                 System.out.println("Retrieved file name: " + fileName);
-                 File tempFile = new File("temp_" + fileName);
-            try (OutputStream os = new FileOutputStream(tempFile)) {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-
-                while ((bytesRead = fileData.read(buffer)) != -1) {
-                    os.write(buffer, 0, bytesRead);
+                // Ensure the save directory exists
+                Path saveDir = Paths.get(SAVE_DIRECTORY);
+                if (!Files.exists(saveDir)) {
+                    Files.createDirectories(saveDir);
                 }
-                System.out.println("File saved temporarily at: " + tempFile.getAbsolutePath());
-                fileLabel.setText("File: " + tempFile.getAbsolutePath());
-            }
-                // If the file is an image, display it
-                if (fileName.toLowerCase().endsWith(".jpg") || fileName.toLowerCase().endsWith(".jpeg") ||
-                        fileName.toLowerCase().endsWith(".png") || fileName.toLowerCase().endsWith(".gif")|| fileName.toLowerCase().endsWith(".pdf")) {
 
-                      ImageIcon imageIcon = new ImageIcon(tempFile.getAbsolutePath());
-                fileLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                // Define the file path and save it permanently in the designated folder
+                Path filePath = saveDir.resolve(fileName);
+                Files.copy(fileData, filePath, StandardCopyOption.REPLACE_EXISTING);
 
-                } 
+                // Set up the clickable link to open the saved file
+                linkLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        try {
+                            Desktop.getDesktop().open(filePath.toFile());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            JOptionPane.showMessageDialog(null, "Could not open file: " + e.getMessage());
+                        }
+                    }
+                });
             } else {
-                fileLabel.setText("No file found in database.");
-                System.out.println("No records found in uploaded_files.");
+                linkLabel.setText("No PDF file found in the database.");
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading file!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    
-        initComponents();
-}
+    }
     
 
     /**
@@ -100,11 +91,11 @@ public class FileViewer extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 761, Short.MAX_VALUE)
+            .addGap(0, 855, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGap(0, 455, Short.MAX_VALUE)
         );
 
         pack();
