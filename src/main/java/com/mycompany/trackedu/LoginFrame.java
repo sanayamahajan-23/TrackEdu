@@ -173,7 +173,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     homet homeTFrame = new homet(); // Assuming HomeT is your frame class for teachers
                     homeTFrame.setVisible(true);
                 } else if ("student".equalsIgnoreCase(role)) {
-                    home homeFrame = new home(); // Assuming Home is your frame class for students
+                    home homeFrame = new home(username); // Assuming Home is your frame class for students
                     homeFrame.setVisible(true);
                 }
 
