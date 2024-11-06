@@ -17,6 +17,7 @@ public class TopicStudentFrame extends javax.swing.JFrame {
     private TopicsDatabaseManager topicsDataManager; // Instance of TopicsDataManager
     private DefaultListModel<String> topicListModel; // Stores topics as String objects
     private String selectedSubject;
+    private String username;
     private String selectedSection;
 
     /**
@@ -176,7 +177,7 @@ public class TopicStudentFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        home h1 = new home();
+        home h1 = new home(username);
         h1.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
