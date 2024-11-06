@@ -274,7 +274,7 @@ public class SignupFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error connecting to the signup database: " + ex.getMessage());
         }
         if ("student".equalsIgnoreCase(role)) {
-                    home homeFrame = new home(); // Assuming Home is your frame class for students
+                    home homeFrame = new home(entryNo); // Assuming Home is your frame class for students
                     homeFrame.setVisible(true);}
     }//GEN-LAST:event_jButton1ActionPerformed
 
