@@ -234,6 +234,8 @@ public class homet extends javax.swing.JFrame {
     i.setVisible(true);
     this.setVisible(false);
         // TODO add your handling code here:
+        Insert frame = new Insert();
+        frame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
