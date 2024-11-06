@@ -14,11 +14,13 @@ import javax.swing.SwingUtilities;
  * @author divya
  */
 public class home extends javax.swing.JFrame {
+    private static String username;
 
     /**
      * Creates new form home
      */
-    public home() {
+    public home(String username) {
+        this.username = username; 
         initComponents();
     }
 
@@ -214,7 +216,7 @@ public class home extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        StAttendance frame = new StAttendance();
+        StAttendance frame = new StAttendance(username);
         frame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -293,7 +295,7 @@ public class home extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new home().setVisible(true);
+                new home(username).setVisible(true);
             }
         });
     }
