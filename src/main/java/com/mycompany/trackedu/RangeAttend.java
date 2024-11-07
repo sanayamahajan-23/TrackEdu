@@ -74,7 +74,7 @@ public class RangeAttend extends javax.swing.JFrame {
 
         jLabel5.setText("to");
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artificial intelligence", "java", "compiler", "sdn" }));
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artificial intelligence", "Java", "Compiler", "SDN" }));
 
         jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
 
