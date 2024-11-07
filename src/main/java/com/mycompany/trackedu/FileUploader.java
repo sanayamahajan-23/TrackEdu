@@ -14,7 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 public class FileUploader extends javax.swing.JFrame {
- private JButton uploadButton, saveButton;
+    private  JButton uploadButton;
+    private  JButton saveButton;
     private JLabel fileLabel;
     private File selectedFile;
     /**
