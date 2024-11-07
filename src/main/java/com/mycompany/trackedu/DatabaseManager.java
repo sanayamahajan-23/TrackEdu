@@ -51,23 +51,40 @@ public class DatabaseManager {
     }
 
     // Update attendance record
-public boolean updateAttendanceRow(String studentId, String date, String status, String subject, String section) {
-    String query = "UPDATE attendance SET status = ? WHERE student_id = ? AND date = ? AND subject = ? AND section = ?";
-    
-    try (PreparedStatement stmt = connection.prepareStatement(query)) {
-        stmt.setString(1, status);
-        stmt.setString(2, studentId);
-        stmt.setString(3, date);
-        stmt.setString(4, subject);
-        stmt.setString(5, section);
+public boolean updateAttendanceRow(String studentId, String date, String status, String subject, String section) { 
+    PreparedStatement ps = null;
+    try {
+        String query = "UPDATE attendance SET status = ?, subject = ?, section = ? WHERE student_id = ? AND date = ?";
+        ps = connection.prepareStatement(query);
+
+        // Debugging output
+        System.out.println("Executing query: " + query);
+        System.out.println("Parameters: studentId=" + studentId + ", date=" + date + ", status=" + status + ", subject=" + subject + ", section=" + section);
         
-        int rowsUpdated = stmt.executeUpdate();
-        return rowsUpdated > 0; // return true if update succeeded
+        ps.setString(1, status);   
+        ps.setString(2, subject);  
+        ps.setString(3, section);  
+        ps.setString(4, studentId); 
+        ps.setString(5, date);     
+
+        int rowsAffected = ps.executeUpdate();
+        
+        // More debugging output
+        System.out.println("Rows affected: " + rowsAffected);
+        
+        return rowsAffected > 0;
     } catch (SQLException e) {
-        e.printStackTrace();
+        System.err.println("Failed to update attendance: " + e.getMessage());
         return false;
+    } finally {
+        try {
+            if (ps != null) ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
+
 
     // Delete attendance record by id
 public void deleteAttendance(String studentId, String date, String subject, String section) {
