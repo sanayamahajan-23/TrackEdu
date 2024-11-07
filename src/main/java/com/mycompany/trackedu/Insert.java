@@ -21,7 +21,7 @@ public class Insert extends javax.swing.JFrame {
     public Insert() {
         initComponents();
         refreshTable(); // Initialize table with data from the database
-
+        
     }
 
     /**
@@ -212,9 +212,9 @@ public class Insert extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,17 +274,20 @@ public class Insert extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  int selectedRow = jTable3.getSelectedRow();
+    int selectedRow = jTable3.getSelectedRow();
     
     if (selectedRow != -1) {
-        // Retrieve the new values from the jTable3 selected row
-        String studentId = jTable3.getValueAt(selectedRow, 0).toString();
-        String date = jTable3.getValueAt(selectedRow, 1).toString();
-        String status = jTable3.getValueAt(selectedRow, 2).toString();
+        // Retrieve the edited values from the jTable3 selected row
+        String studentId = jTable3.getValueAt(selectedRow, 0).toString(); // Get student ID
+        String date = jTable3.getValueAt(selectedRow, 1).toString();      // Get date
+        String status = jTable3.getValueAt(selectedRow, 2).toString();    // Get status
         
         // Fetch other details like subject and section from the UI (since they are not editable in jTable3)
-        String subject = (String) jComboBox6.getSelectedItem();
-        String section = (String) jComboBox2.getSelectedItem();
+        String subject = (String) jComboBox6.getSelectedItem();  // Get selected subject
+        String section = (String) jComboBox2.getSelectedItem();  // Get selected section
+        
+        // Create an instance of the DatabaseManager to update the database
+        DatabaseManager dbManager = new DatabaseManager();
         
         // Call the method to update the database with the new values
         boolean isUpdated = dbManager.updateAttendanceRow(studentId, date, status, subject, section);
@@ -297,6 +300,9 @@ public class Insert extends javax.swing.JFrame {
         
         // Refresh the table to display updated data
         refreshTable();
+        
+        // Close the database connection
+        dbManager.close();
     } else {
         JOptionPane.showMessageDialog(this, "Please select a row to update.");
     }
