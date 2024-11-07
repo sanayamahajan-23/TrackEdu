@@ -131,12 +131,16 @@ public class Insert extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Java", "Ai", "Compiler", "SDN" }));
         jComboBox6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox6ActionPerformed(evt);
             }
         });
+=======
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artifical intelligence", "Java", "Compiler", "SDN" }));
+>>>>>>> 996bec30c68c0ac44d2a0438d9393da03081f046
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
