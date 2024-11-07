@@ -4,6 +4,7 @@
  */
 package com.mycompany.trackedu;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +34,7 @@ public class StAttendance extends javax.swing.JFrame {
         jLabel15.setVisible(false);
         jLabel16.setVisible(false);
         jLabel17.setVisible(false);
+        jLabel18.setVisible(true);
         jButton2.setVisible(false);
     }
 
@@ -69,6 +71,7 @@ public class StAttendance extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,15 +95,17 @@ public class StAttendance extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText(".");
 
-        jLabel7.setText("total classes");
+        jLabel7.setText("Total classes");
 
-        jLabel8.setText("no .of classes attended");
+        jLabel8.setText("No .of classes attended");
 
-        jLabel9.setText("no. of absent");
+        jLabel9.setText("No. of Absent");
 
-        jLabel10.setText("percentage");
+        jLabel10.setText("Percentage");
 
         jLabel11.setText("Is their shortage of attendance in this subject");
 
@@ -112,14 +117,22 @@ public class StAttendance extends javax.swing.JFrame {
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2024", "2025", "2026" }));
 
+        jLabel13.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText(".");
 
+        jLabel14.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText(".");
 
+        jLabel15.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setText(".");
 
-        jLabel16.setText(".");
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setText("       .");
 
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel17.setText(".");
 
         jButton2.setText("Get Attendance Monthwise /Weekwise");
@@ -128,6 +141,8 @@ public class StAttendance extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jLabel18.setText(".");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,8 +153,6 @@ public class StAttendance extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel17)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,32 +189,42 @@ public class StAttendance extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel16)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(jLabel8))
+                            .addComponent(jLabel7)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(113, 113, 113)
-                                .addComponent(jLabel14)))
-                        .addGap(71, 71, 71)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(82, 82, 82)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(23, 23, 23)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(44, 44, 44))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel15)))
-                        .addGap(52, 52, 52))))
+                                .addGap(81, 81, 81)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,7 +252,8 @@ public class StAttendance extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jLabel17))
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -265,7 +289,16 @@ public class StAttendance extends javax.swing.JFrame {
 
     // Fetch the attendance data from the database
     String attendanceStatus = databaseManager.getAttendanceStatus(username, subject, section, date);
-    jLabel17.setText("Attendance for "+date +" is "+attendanceStatus);
+    jLabel17.setOpaque(true);
+    jLabel18.setText("Attendance for "+date +" is ");
+    jLabel17.setText(attendanceStatus);
+    if ("Present".equals(attendanceStatus)) {
+    jLabel17.setBackground(Color.GREEN); 
+    } else if ("Absent".equals(attendanceStatus)) {
+    jLabel17.setBackground(Color.RED);     
+    } else { 
+    jLabel17.setBackground(Color.WHITE);  
+    }
     ArrayList<String[]> attendanceRecords = databaseManager.getAllAttendance();
     
     jLabel6.setVisible(true);
@@ -306,10 +339,16 @@ public class StAttendance extends javax.swing.JFrame {
     jLabel15.setText(String.format("%.2f%%", percentage)); // Attendance percentage
 
     // Check if there's a shortage of attendance
-    if (percentage < 75) {
+    jLabel16.setOpaque(true);
+    if (totalClasses == 0) {
+    jLabel16.setText("No classes held"); 
+    jLabel16.setBackground(Color.WHITE);
+    }else if (percentage < 75) {
         jLabel16.setText("Yes");
+        jLabel16.setBackground(Color.RED);
     } else {
         jLabel16.setText("No");
+        jLabel16.setBackground(Color.GREEN);
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -372,6 +411,7 @@ public class StAttendance extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
