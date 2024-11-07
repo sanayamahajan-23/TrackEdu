@@ -95,4 +95,54 @@ public class DatabaseManager {
         }
         return records;
     }
+    public String getAttendanceStatus(String studentId, String subject, String section, String date) {
+    String attendanceStatus = "No Data"; // Default status when no record is found
+    String query = "SELECT status FROM attendance WHERE student_id = ? AND subject = ? AND section = ? AND date = ?";
+
+    try (PreparedStatement stmt = connection.prepareStatement(query)){
+      
+
+        // Set parameters
+        stmt.setString(1, studentId);
+        stmt.setString(2, subject);
+        stmt.setString(3, section);
+        stmt.setString(4, date);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            attendanceStatus = rs.getString("status"); // Get the status (Present/Absent)
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return attendanceStatus;
+}
+    public ArrayList<String[]> getAttendanceRecordsInRange(String studentId, String subject, String section, String startDate, String endDate) {
+    ArrayList<String[]> records = new ArrayList<>();
+    String query = "SELECT * FROM attendance WHERE student_id = ? AND subject = ? AND section = ? AND date BETWEEN ? AND ? ORDER BY date ASC";
+    
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setString(1, studentId);
+        stmt.setString(2, subject);
+        stmt.setString(3, section);
+        stmt.setString(4, startDate); // Starting date in yyyy-MM-dd format
+        stmt.setString(5, endDate);   // Ending date in yyyy-MM-dd format
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            String[] record = new String[2];
+            record[0] = rs.getString("date");   // Date
+            record[1] = rs.getString("status"); // Status (Present/Absent)
+            records.add(record);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return records;
+}
+
+
 }
