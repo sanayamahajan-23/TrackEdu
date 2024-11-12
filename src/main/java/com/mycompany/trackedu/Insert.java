@@ -11,7 +11,7 @@ package com.mycompany.trackedu;
 import com.mycompany.trackedu.DatabaseManager;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-
+import javax.swing.JOptionPane;
 public class Insert extends javax.swing.JFrame {
  private DatabaseManager dbManager = new DatabaseManager();
 
@@ -21,7 +21,7 @@ public class Insert extends javax.swing.JFrame {
     public Insert() {
         initComponents();
         refreshTable(); // Initialize table with data from the database
-
+        
     }
 
     /**
@@ -131,11 +131,26 @@ public class Insert extends javax.swing.JFrame {
             }
         });
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Java", "Ai", "Compiler", "SDN" }));
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artifical intelligence", "Java", "Compiler", "SDN" }));
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2024", "2025", "2026" }));
+        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox5ActionPerformed(evt);
+            }
+        });
 
         jTable3.setBackground(new java.awt.Color(153, 204, 255));
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -197,9 +212,9 @@ public class Insert extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,26 +274,62 @@ public class Insert extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int selectedRow = jTable3.getSelectedRow();
-        if (selectedRow != -1) {
-            int id = (int) jTable3.getValueAt(selectedRow, 0);
-            String studentId = jTextField1.getText();
-            String date = jComboBox5.getSelectedItem() + "-" + jComboBox3.getSelectedItem() + "-" + jComboBox4.getSelectedItem();
-            String status = (String) jComboBox1.getSelectedItem();
-
-            dbManager.updateAttendance(id, studentId, date, status);
-            refreshTable();
+    int selectedRow = jTable3.getSelectedRow();
+    
+    if (selectedRow != -1) {
+        // Retrieve the edited values from the jTable3 selected row
+        String studentId = jTable3.getValueAt(selectedRow, 0).toString(); // Get student ID
+        String date = jTable3.getValueAt(selectedRow, 1).toString();      // Get date
+        String status = jTable3.getValueAt(selectedRow, 2).toString();    // Get status
+        
+        // Fetch other details like subject and section from the UI (since they are not editable in jTable3)
+        String subject = (String) jComboBox6.getSelectedItem();  // Get selected subject
+        String section = (String) jComboBox2.getSelectedItem();  // Get selected section
+        
+        // Create an instance of the DatabaseManager to update the database
+        DatabaseManager dbManager = new DatabaseManager();
+        
+        // Call the method to update the database with the new values
+        boolean isUpdated = dbManager.updateAttendanceRow(studentId, date, status, subject, section);
+        
+        if (isUpdated) {
+            JOptionPane.showMessageDialog(this, "Attendance updated successfully.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update attendance.");
         }
+        
+        // Refresh the table to display updated data
+        refreshTable();
+        
+        // Close the database connection
+        dbManager.close();
+    } else {
+        JOptionPane.showMessageDialog(this, "Please select a row to update.");
+    }
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-          int selectedRow = jTable3.getSelectedRow();
-        if (selectedRow != -1) {
-            int id = (int) jTable3.getValueAt(selectedRow, 0);
-            dbManager.deleteAttendance(id);
-            refreshTable();
-        }
+    int selectedRow = jTable3.getSelectedRow();
+    if (selectedRow != -1) {
+        // Retrieve the studentId as a string (assuming the first column in the table is studentId)
+        String studentId = jTable3.getValueAt(selectedRow, 0).toString();
+        
+        // Get the date from the date combo boxes (make sure the format matches your database)
+        String date = jComboBox5.getSelectedItem() + "-" + jComboBox3.getSelectedItem() + "-" + jComboBox4.getSelectedItem();
+        
+        // Get the subject and section from the combo boxes
+        String subject = (String) jComboBox6.getSelectedItem();
+        String section = (String) jComboBox2.getSelectedItem();
+
+        // Call the deleteAttendance method with the additional parameters
+        dbManager.deleteAttendance(studentId, date, subject, section);
+        
+        // Refresh the table after deletion
+        refreshTable();
+    } else {
+        JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+    }
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -293,15 +344,36 @@ public class Insert extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        // TODO add your handling code here:
+        refreshTable();
+    }//GEN-LAST:event_jComboBox6ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        refreshTable();
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox5ActionPerformed
  private void refreshTable() {
-        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-        model.setRowCount(0);
-        
-        ArrayList<String[]> records = dbManager.getAllAttendance();
-        for (String[] record : records) {
-            model.addRow(record);
-        }
+    DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+    model.setRowCount(0); // Clear the current table data
+    
+    // Get the selected subject and section
+    String subject = (String) jComboBox6.getSelectedItem();
+    String section = (String) jComboBox2.getSelectedItem();
+    
+    // Fetch attendance records for the selected subject and section
+    ArrayList<String[]> records = dbManager.getAttendanceForSubjectAndSection(subject, section);
+    
+    // Populate the table with filtered records
+    for (String[] record : records) {
+        model.addRow(record);
     }
+}
 
 
     /**

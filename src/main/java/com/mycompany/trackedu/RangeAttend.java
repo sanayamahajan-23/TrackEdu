@@ -74,7 +74,7 @@ public class RangeAttend extends javax.swing.JFrame {
 
         jLabel5.setText("to");
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artificial intelligence", "java", "compiler", "sdn" }));
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artificial intelligence", "Java", "Compiler", "SDN" }));
 
         jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
 
@@ -180,7 +180,7 @@ public class RangeAttend extends javax.swing.JFrame {
     String month2 = (String) jComboBox5.getSelectedItem();
     String year2 = (String) jComboBox6.getSelectedItem();
     String endDate = year2 + "-" + month2 + "-" + day2; // End date in yyyy-MM-dd format
-    jLabel6.setText("Attendance form "+startDate +" to "+endDate);
+    jLabel6.setText("Attendance from "+startDate +" to "+endDate);
     List<String[]> attendanceRecords = databaseManager.getAttendanceRecordsInRange(username, subject, section, startDate, endDate);
 
     // Display the attendance records

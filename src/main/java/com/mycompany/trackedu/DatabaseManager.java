@@ -22,16 +22,16 @@ public class DatabaseManager {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Failed to connect to database: " + e.getMessage());
         }
     }
 
     // Method to close the connection
     public void close() {
         try {
-            if (connection != null) connection.close();
+            if (connection != null && !connection.isClosed()) connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Failed to close database connection: " + e.getMessage());
         }
     }
 
@@ -46,34 +46,59 @@ public class DatabaseManager {
             stmt.setString(5, section);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Failed to insert attendance: " + e.getMessage());
         }
     }
 
     // Update attendance record
-    public void updateAttendance(int id, String studentId, String date, String status) {
-        String query = "UPDATE attendance SET student_id = ?, date = ?, status = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, studentId);
-            stmt.setString(2, date);
-            stmt.setString(3, status);
-            stmt.setInt(4, id);
-            stmt.executeUpdate();
+public boolean updateAttendanceRow(String studentId, String date, String status, String subject, String section) { 
+    PreparedStatement ps = null;
+    try {
+        String query = "UPDATE attendance SET status = ?, subject = ?, section = ? WHERE student_id = ? AND date = ?";
+        ps = connection.prepareStatement(query);
+
+        // Debugging output
+        System.out.println("Executing query: " + query);
+        System.out.println("Parameters: studentId=" + studentId + ", date=" + date + ", status=" + status + ", subject=" + subject + ", section=" + section);
+        
+        ps.setString(1, status);   
+        ps.setString(2, subject);  
+        ps.setString(3, section);  
+        ps.setString(4, studentId); 
+        ps.setString(5, date);     
+
+        int rowsAffected = ps.executeUpdate();
+        
+        // More debugging output
+        System.out.println("Rows affected: " + rowsAffected);
+        
+        return rowsAffected > 0;
+    } catch (SQLException e) {
+        System.err.println("Failed to update attendance: " + e.getMessage());
+        return false;
+    } finally {
+        try {
+            if (ps != null) ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+}
+
 
     // Delete attendance record by id
-    public void deleteAttendance(int id) {
-        String query = "DELETE FROM attendance WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+public void deleteAttendance(String studentId, String date, String subject, String section) {
+    String query = "DELETE FROM attendance WHERE student_id = ? AND date = ? AND subject = ? AND section = ?";
+    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setString(1, studentId);  // Set studentId as a string
+        stmt.setString(2, date);       // Set date as a string (ensure the format matches your database)
+        stmt.setString(3, subject);    // Set subject as a string
+        stmt.setString(4, section);    // Set section as a string
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        System.err.println("Failed to delete attendance: " + e.getMessage());
     }
+}
 
     // Retrieve all attendance records
     public ArrayList<String[]> getAllAttendance() {
@@ -91,58 +116,79 @@ public class DatabaseManager {
                 records.add(record);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Failed to retrieve attendance records: " + e.getMessage());
         }
         return records;
     }
-    public String getAttendanceStatus(String studentId, String subject, String section, String date) {
-    String attendanceStatus = "No Data"; // Default status when no record is found
-    String query = "SELECT status FROM attendance WHERE student_id = ? AND subject = ? AND section = ? AND date = ?";
-
-    try (PreparedStatement stmt = connection.prepareStatement(query)){
-      
-
-        // Set parameters
-        stmt.setString(1, studentId);
-        stmt.setString(2, subject);
-        stmt.setString(3, section);
-        stmt.setString(4, date);
-
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            attendanceStatus = rs.getString("status"); // Get the status (Present/Absent)
-        }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-    return attendanceStatus;
-}
-    public ArrayList<String[]> getAttendanceRecordsInRange(String studentId, String subject, String section, String startDate, String endDate) {
+    public ArrayList<String[]> getAttendanceForSubjectAndSection(String subject, String section) {
     ArrayList<String[]> records = new ArrayList<>();
-    String query = "SELECT * FROM attendance WHERE student_id = ? AND subject = ? AND section = ? AND date BETWEEN ? AND ? ORDER BY date ASC";
+    String query = "SELECT student_id, date, status FROM attendance WHERE subject = ? AND section = ?";
     
     try (PreparedStatement stmt = connection.prepareStatement(query)) {
-        stmt.setString(1, studentId);
-        stmt.setString(2, subject);
-        stmt.setString(3, section);
-        stmt.setString(4, startDate); // Starting date in yyyy-MM-dd format
-        stmt.setString(5, endDate);   // Ending date in yyyy-MM-dd format
-
+         
+        
+        stmt.setString(1, subject);
+        stmt.setString(2, section);
+        
         ResultSet rs = stmt.executeQuery();
+        
         while (rs.next()) {
-            String[] record = new String[2];
-            record[0] = rs.getString("date");   // Date
-            record[1] = rs.getString("status"); // Status (Present/Absent)
-            records.add(record);
+            String studentId = rs.getString("student_id");
+            String date = rs.getString("date");
+            String status = rs.getString("status");
+            records.add(new String[] {studentId, date, status});
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
+    
     return records;
 }
 
+    // Retrieve specific attendance status
+    public String getAttendanceStatus(String studentId, String subject, String section, String date) {
+        String attendanceStatus = "No Data";
+        String query = "SELECT status FROM attendance WHERE student_id = ? AND subject = ? AND section = ? AND date = ?";
 
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, studentId);
+            stmt.setString(2, subject);
+            stmt.setString(3, section);
+            stmt.setString(4, date);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                attendanceStatus = rs.getString("status");
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to retrieve attendance status: " + e.getMessage());
+        }
+
+        return attendanceStatus;
+    }
+
+    // Retrieve attendance records within a date range
+    public ArrayList<String[]> getAttendanceRecordsInRange(String studentId, String subject, String section, String startDate, String endDate) {
+        ArrayList<String[]> records = new ArrayList<>();
+        String query = "SELECT * FROM attendance WHERE student_id = ? AND subject = ? AND section = ? AND date BETWEEN ? AND ? ORDER BY date ASC";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, studentId);
+            stmt.setString(2, subject);
+            stmt.setString(3, section);
+            stmt.setString(4, startDate);
+            stmt.setString(5, endDate);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String[] record = new String[2];
+                record[0] = rs.getString("date");
+                record[1] = rs.getString("status");
+                records.add(record);
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to retrieve attendance records in range: " + e.getMessage());
+        }
+        return records;
+    }
 }
