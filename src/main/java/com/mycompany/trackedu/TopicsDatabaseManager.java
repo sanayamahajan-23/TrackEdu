@@ -17,7 +17,7 @@ public class TopicsDatabaseManager {
     public TopicsDatabaseManager() {
         try {
             // Setup the connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/topics", "admin", "admin");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/topics", "root", "admin");
         } catch (SQLException e) {
             e.printStackTrace();
         }

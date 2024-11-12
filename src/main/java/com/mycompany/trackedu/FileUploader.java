@@ -14,7 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 public class FileUploader extends javax.swing.JFrame {
- private JButton uploadButton, saveButton;
+    private  JButton uploadButton;
+    private  JButton saveButton;
     private JLabel fileLabel;
     private File selectedFile;
     /**
@@ -79,7 +80,7 @@ public class FileUploader extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 857, Short.MAX_VALUE)
+            .addGap(0, 826, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
