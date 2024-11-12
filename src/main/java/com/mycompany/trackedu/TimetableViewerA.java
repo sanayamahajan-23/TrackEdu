@@ -11,6 +11,8 @@ package com.mycompany.trackedu;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 public class TimetableViewerA extends javax.swing.JFrame {
 
@@ -25,6 +27,28 @@ public class TimetableViewerA extends javax.swing.JFrame {
         setSize(817, 477);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Menu");
+        JMenuItem backItem = new JMenuItem("Back");
+
+        // Add action for "Back" menu item
+        backItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Code to go back to the home page
+                // Assuming HomePage is the class for the home page JFrame
+               java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                String username = null;
+                new home(username).setVisible(true);
+            }
+        });
+                dispose(); // Close the FileUploader window
+            }
+        });
+
+        menu.add(backItem);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
 
         // Initialize Database Connection
         db = new TimetableDatabase();
