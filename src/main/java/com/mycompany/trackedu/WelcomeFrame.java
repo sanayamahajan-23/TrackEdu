@@ -3,16 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.trackedu;
-
+import java.awt.Color;
 /**
  *
  * @author HP
  */
 public class WelcomeFrame extends javax.swing.JFrame {
-
+       
     /**
      * Creates new form WelcomeFrame
      */
+ 
     public WelcomeFrame() {
         initComponents();
     }
@@ -41,6 +42,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(153, 102, 255));
         jLabel1.setText("Welcome To TrackEdu...");
 
+        jButton1.setBackground(new java.awt.Color(153, 255, 51));
         jButton1.setText("Sign Up");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +110,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+         jButton1.setOpaque(true);
         SignupFrame signup = new SignupFrame();
         signup.setVisible(true);
         this.setVisible(false);
@@ -146,7 +149,7 @@ public class WelcomeFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(WelcomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
