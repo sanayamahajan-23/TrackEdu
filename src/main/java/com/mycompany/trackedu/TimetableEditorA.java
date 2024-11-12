@@ -37,7 +37,7 @@ public class TimetableEditorA extends javax.swing.JFrame {
         add(saveButton, BorderLayout.SOUTH);
         validate();
         setVisible(true);
-        // Example of adding a new row in TimetableEditorA
+        
 
     }
 
