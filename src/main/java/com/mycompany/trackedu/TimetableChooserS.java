@@ -19,6 +19,7 @@ public class TimetableChooserS extends javax.swing.JFrame {
     public TimetableChooserS() {
       
         initComponents();
+        jPanel1.setBackground(new Color(0xCAE9F5));
     }
 
     /**
