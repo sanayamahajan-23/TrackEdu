@@ -8,6 +8,7 @@ package com.mycompany.trackedu;
  *
  * @author HP
  */
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -25,6 +26,7 @@ public class TopicStudentFrame extends javax.swing.JFrame {
      */
     public TopicStudentFrame() {
         initComponents();
+        getContentPane().setBackground(new Color(0xCAE9F5));
         topicsDataManager = new TopicsDatabaseManager(); // Initialize TopicsDatabaseManager
         initializeData();
         jComboBox2.setVisible(false); // Initially hide the section combo box

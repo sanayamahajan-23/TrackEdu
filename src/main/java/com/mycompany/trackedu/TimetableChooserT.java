@@ -4,6 +4,7 @@
  */
 package com.mycompany.trackedu;
 
+import java.awt.Color;
 import javax.swing.SwingUtilities;
 
 /**
@@ -17,6 +18,7 @@ public class TimetableChooserT extends javax.swing.JFrame {
      */
     public TimetableChooserT() {
         initComponents();
+         jPanel1.setBackground(new Color(0xCAE9F5));
     }
 
     /**
@@ -38,9 +40,10 @@ public class TimetableChooserT extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 153, 255));
         jLabel1.setText("CHOOSE SECTION");
 
-        jButton1.setBackground(new java.awt.Color(204, 0, 51));
+        jButton1.setBackground(new java.awt.Color(0, 204, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("SECTION A");
@@ -50,7 +53,7 @@ public class TimetableChooserT extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(204, 0, 51));
+        jButton2.setBackground(new java.awt.Color(0, 204, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("SECTION B");

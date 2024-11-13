@@ -22,6 +22,7 @@ private JTable table;
      */
     public TimetableEditorB() {
         setTitle("Timetable Editor");
+        getContentPane().setBackground(new Color(0xCAE9F5));
         setSize(817, 477);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

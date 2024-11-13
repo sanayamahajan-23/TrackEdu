@@ -24,11 +24,11 @@ public class FileViewer extends javax.swing.JFrame {
      */
     public FileViewer() {
         setTitle("File Viewer");
-        setSize(400, 200);
+        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menu");
+        JMenu menu = new JMenu("<");
         JMenuItem backItem = new JMenuItem("Back");
 
         // Add action for "Back" menu item
