@@ -72,6 +72,9 @@ public class StAttendance extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,6 +146,20 @@ public class StAttendance extends javax.swing.JFrame {
         });
 
         jLabel18.setText(".");
+
+        jMenu1.setText("Menu");
+
+        jMenuItem1.setText("Back to Home");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -270,7 +287,7 @@ public class StAttendance extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(36, 36, 36))
         );
@@ -359,6 +376,13 @@ public class StAttendance extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        home Frame = new home(username);
+        Frame.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -420,5 +444,8 @@ public class StAttendance extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }
