@@ -24,8 +24,7 @@ public class FileViewer extends javax.swing.JFrame {
      */
     public FileViewer() {
         setTitle("File Viewer");
-        getContentPane().setBackground(new Color(0xCAE9F5));
-        setSize(400, 200);
+        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
         JMenuBar menuBar = new JMenuBar();

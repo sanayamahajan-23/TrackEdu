@@ -22,6 +22,7 @@ public class home extends javax.swing.JFrame {
      */
     public home(String username) {
         this.username = username; 
+        
         initComponents();
         jPanel1.setBackground(new Color(0xCAE9F5));
     }
@@ -53,6 +54,8 @@ public class home extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 255));
@@ -182,6 +185,8 @@ public class home extends javax.swing.JFrame {
                         .addGap(55, 55, 55)))
                 .addContainerGap(116, Short.MAX_VALUE))
         );
+
+        jMenuBar1.setBackground(new java.awt.Color(204, 255, 255));
 
         jMenu1.setText("Menu");
 
