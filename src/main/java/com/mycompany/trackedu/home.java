@@ -4,6 +4,7 @@
  */
 package com.mycompany.trackedu;
 
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ public class home extends javax.swing.JFrame {
      */
     public home(String username) {
         this.username = username; 
+        
         initComponents();
     }
 
@@ -52,7 +54,7 @@ public class home extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
@@ -182,6 +184,8 @@ public class home extends javax.swing.JFrame {
                         .addGap(55, 55, 55)))
                 .addContainerGap(116, Short.MAX_VALUE))
         );
+
+        jMenuBar1.setBackground(new java.awt.Color(204, 255, 255));
 
         jMenu1.setText("Menu");
 
