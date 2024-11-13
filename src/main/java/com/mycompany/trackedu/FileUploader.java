@@ -26,6 +26,27 @@ public class FileUploader extends javax.swing.JFrame {
         setSize(817, 478);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Menu");
+        JMenuItem backItem = new JMenuItem("Back");
+
+        // Add action for "Back" menu item
+        backItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Code to go back to the home page
+                // Assuming HomePage is the class for the home page JFrame
+               java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new homet().setVisible(true);
+            }
+        });
+                dispose(); // Close the FileUploader window
+            }
+        });
+
+        menu.add(backItem);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
         fileLabel = new JLabel("No file selected");
         
         add(fileLabel);
