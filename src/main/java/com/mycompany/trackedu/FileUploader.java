@@ -8,6 +8,7 @@ package com.mycompany.trackedu;
  *
  * @author divya
  */
+import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,11 +24,12 @@ public class FileUploader extends javax.swing.JFrame {
      */
     public FileUploader() {
            setTitle("File Uploader");
+            getContentPane().setBackground(new Color(0xCAE9F5));
         setSize(817, 478);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menu");
+        JMenu menu = new JMenu("<");
         JMenuItem backItem = new JMenuItem("Back");
 
         // Add action for "Back" menu item

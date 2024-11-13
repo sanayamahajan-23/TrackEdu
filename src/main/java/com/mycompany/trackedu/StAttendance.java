@@ -21,6 +21,7 @@ public class StAttendance extends javax.swing.JFrame {
     public StAttendance(String username) {
         this.username = username; 
         initComponents();
+        getContentPane().setBackground(new Color(0xCAE9F5));
         jLabel12.setText(username);
         databaseManager = new DatabaseManager();
         jLabel6.setVisible(false);
@@ -91,6 +92,9 @@ public class StAttendance extends javax.swing.JFrame {
 
         jLabel4.setText("Enter date");
 
+        jButton1.setBackground(new java.awt.Color(0, 204, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText(" Get Attendance ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +142,9 @@ public class StAttendance extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel17.setText(".");
 
+        jButton2.setBackground(new java.awt.Color(0, 204, 255));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Get Attendance Monthwise /Weekwise");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +154,7 @@ public class StAttendance extends javax.swing.JFrame {
 
         jLabel18.setText(".");
 
-        jMenu1.setText("Menu");
+        jMenu1.setText("<");
 
         jMenuItem1.setText("Back to Home");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -287,7 +294,7 @@ public class StAttendance extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(36, 36, 36))
         );

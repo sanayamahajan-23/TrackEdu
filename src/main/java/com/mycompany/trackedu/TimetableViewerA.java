@@ -24,6 +24,7 @@ public class TimetableViewerA extends javax.swing.JFrame {
    private TimetableDatabase db;
     public TimetableViewerA() {
         setTitle("Timetable Viewer");
+        getContentPane().setBackground(new Color(0xCAE9F5));
         setSize(817, 477);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
