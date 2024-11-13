@@ -27,8 +27,8 @@ public class LoginFrame extends javax.swing.JFrame {
      */
     public LoginFrame() {
         initComponents();
-          jLabel3.setForeground(Color.BLUE); // Set text color to blue
-        jLabel3.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Change cursor to hand
+        jLabel3.setForeground(Color.BLUE); 
+        jLabel3.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
@@ -166,7 +166,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
        String username = jTextField1.getText();
-    String password = new String(jPasswordField1.getPassword());
+       String password = new String(jPasswordField1.getPassword());
 
     // Check if username or password is empty
     if (username.isEmpty() || password.isEmpty()) {
