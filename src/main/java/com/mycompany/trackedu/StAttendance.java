@@ -84,7 +84,7 @@ public class StAttendance extends javax.swing.JFrame {
 
         jLabel2.setText("Subject");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artifical intelligence", "Java", "Compiler", "SDN" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artificial intelligence", "Java", "Compiler", "SDN" }));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
 
