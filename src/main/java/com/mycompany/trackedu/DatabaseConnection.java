@@ -9,15 +9,14 @@ package com.mycompany.trackedu;
  * @author HP
  */
 import java.sql.Connection;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
     // Database URL, username, and password
-    private static final String URL = "jdbc:mysql://localhost:3306/users"; // Replace with your database URL
-    private static final String USERNAME = "root";                      // Replace with your DB username
-    private static final String PASSWORD = "admin";                      // Replace with your DB password
+    private static final String URL = "jdbc:mysql://localhost:3306/users"; 
+    private static final String USERNAME = "root";                  
+    private static final String PASSWORD = "admin";                    
 
     // This method establishes and returns the connection
     public static Connection getConnection() {

@@ -14,12 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 public class LoginFrame extends javax.swing.JFrame {
 
     /**
@@ -28,21 +23,21 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
         getContentPane().setBackground(new Color(0xCAE9F5));
-          jLabel3.setForeground(Color.BLUE); // Set text color to blue
-        jLabel3.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Change cursor to hand
+        setupForgotPasswordLabel();
+    }
+
+    private void setupForgotPasswordLabel() {
+        jLabel3.setForeground(Color.BLUE); 
+        jLabel3.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                try {
-                    jLabel3MouseClicked(evt);
-                } catch (SQLException ex) {
-                    Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                openForgotPasswordFrame();
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel3.setText("<html><u>Forgot Password?</u></html>"); // Underline text on hover
+                jLabel3.setText("<html><u>Forgot Password?</u></html>");
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel3.setText("Forgot Password?"); // Remove underline when not hovered
+                jLabel3.setText("Forgot Password?");
             }
         });
     }
@@ -64,6 +59,8 @@ public class LoginFrame extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +105,18 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(51, 51, 255));
         jLabel4.setText("WELCOME  TO LOGIN PAGE ");
 
+        jLabel5.setText("Not Registered?");
+
+        jButton2.setBackground(new java.awt.Color(0, 153, 255));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("SignUp");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,7 +128,13 @@ public class LoginFrame extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(185, 185, 185)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(110, 110, 110)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)))))
                 .addContainerGap(204, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -148,7 +163,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -158,7 +173,11 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(139, 139, 139))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jButton2))
+                .addGap(101, 101, 101))
         );
 
         pack();
@@ -207,12 +226,15 @@ public class LoginFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
     }       
     }//GEN-LAST:event_jButton1ActionPerformed
-        private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) throws SQLException {
-        // Open the Forgot Password Frame
-        forgot forgotPasswordFrame = new forgot();
-        forgotPasswordFrame.setVisible(true);
-        this.setVisible(false); 
-    } 
+   private void openForgotPasswordFrame() {
+    try {
+        forgot f = new forgot(); // Assuming forgot() connects to a database or performs DB-related actions.
+        f.setVisible(true);
+        this.dispose();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error occurred while opening forgot password: " + e.getMessage());
+    }
+}
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -231,6 +253,14 @@ public class LoginFrame extends javax.swing.JFrame {
         jPasswordField1.setEchoChar('●'); // Set a character to mask the password
     }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        SignupFrame sign = new SignupFrame();
+        sign.setVisible(true);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,11 +301,13 @@ public class LoginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

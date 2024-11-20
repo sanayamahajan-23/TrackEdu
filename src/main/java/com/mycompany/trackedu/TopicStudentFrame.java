@@ -9,7 +9,6 @@ package com.mycompany.trackedu;
  * @author HP
  */
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -231,13 +230,7 @@ public class TopicStudentFrame extends javax.swing.JFrame {
          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  TopicStudentFrame frame = new TopicStudentFrame();
-
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            int width = toolkit.getScreenSize().width;
-            int height = toolkit.getScreenSize().height;
-
-            frame.setSize(width , height);
-            frame.setVisible(true);
+                 frame.setVisible(true);
             }
         });
     }
