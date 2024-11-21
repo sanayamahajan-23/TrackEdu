@@ -20,32 +20,26 @@ public class TopicTeacherFrame extends javax.swing.JFrame {
      * Creates new form TopicTeacherFrame
      */
     private TopicsDatabaseManager topicsDatabaseManager;
-    private DefaultListModel<String> topicListModel;  // String model for display
-    private Map<String, Topic> topicMap; // Map to hold Topic objects
+    private DefaultListModel<String> topicListModel;  
+    private Map<String, Topic> topicMap;
     private String selectedSubject;
     private String selectedSection;
 
     public TopicTeacherFrame() {
-        initComponents(); // Keep this line to initialize the UI components
+        initComponents(); 
         getContentPane().setBackground(new Color(0xCAE9F5));
         topicsDatabaseManager = new TopicsDatabaseManager();
         topicListModel = new DefaultListModel<>();
         topicMap = new HashMap<>();
 
-        jList1.setModel(topicListModel); // Set model for jList1
-        initializeData();
-
-        // Hiding certain elements initially
+        jList1.setModel(topicListModel); 
+        
         jComboBox2.setVisible(false);
         jLabel2.setVisible(false);
         jTextField1.setVisible(false);
         jLabel3.setVisible(false);
     }
-       private void initializeData() {
-        // Populate subjects and sections for JComboBoxes
-       jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Java", "Artificial Intelligence", "Software Defined Networks", "Concurrent", "Constitution", "Compiler Design" }));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Section A", "Section B" }));
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,14 +76,14 @@ public class TopicTeacherFrame extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Topic");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Java", "Artificial Intelligence", "Software Defined Networks", "Concurrent", "Constitution", "Compiler Design" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Section A", "Section B" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -281,7 +275,6 @@ public class TopicTeacherFrame extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-            jButton1ActionPerformed(evt);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

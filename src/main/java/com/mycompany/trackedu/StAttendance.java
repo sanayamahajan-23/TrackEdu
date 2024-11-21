@@ -309,7 +309,7 @@ public class StAttendance extends javax.swing.JFrame {
     String day = (String) jComboBox3.getSelectedItem();
     String month = (String) jComboBox4.getSelectedItem();
     String year = (String) jComboBox5.getSelectedItem();
-    String date = year + "-" + month + "-" + day; // Construct date in format yyyy-MM-dd
+    String date = year + "-" + month + "-" + day; 
 
     // Fetch the attendance data from the database
     String attendanceStatus = databaseManager.getAttendanceStatus(username, subject, section, date);
@@ -337,13 +337,10 @@ public class StAttendance extends javax.swing.JFrame {
     jLabel16.setVisible(true);
     jLabel17.setVisible(true);
     jButton2.setVisible(true);
-
-    // Initialize variables to calculate attendance
     int totalClasses = 0;
     int attendedClasses = 0;
     int absentClasses = 0;
 
-    // Iterate through the records and calculate
     for (String[] record : attendanceRecords) {
         if (record[0].equals(username) && record[3].equals(subject) && record[4].equals(section)) {
             totalClasses++;
@@ -355,14 +352,13 @@ public class StAttendance extends javax.swing.JFrame {
         }
     }
 
-    // Update the labels to display the fetched data
-    jLabel13.setText(String.valueOf(totalClasses)); // Total classes
-    jLabel14.setText(String.valueOf(attendedClasses)); // Attended classes
-    jLabel6.setText(String.valueOf(absentClasses)); // Absent classes
+    jLabel13.setText(String.valueOf(totalClasses)); 
+    jLabel14.setText(String.valueOf(attendedClasses)); 
+    jLabel6.setText(String.valueOf(absentClasses)); 
     double percentage = (totalClasses == 0) ? 0 : (attendedClasses * 100.0) / totalClasses;
-    jLabel15.setText(String.format("%.2f%%", percentage)); // Attendance percentage
+    jLabel15.setText(String.format("%.2f%%", percentage)); 
 
-    // Check if there's a shortage of attendance
+  
     jLabel16.setOpaque(true);
     if (totalClasses == 0) {
     jLabel16.setText("No classes held"); 

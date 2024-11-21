@@ -10,8 +10,7 @@ package com.mycompany.trackedu;
  */
 import java.awt.Color;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class TopicStudentFrame extends javax.swing.JFrame {
     private TopicsDatabaseManager topicsDataManager; // Instance of TopicsDataManager
@@ -27,23 +26,10 @@ public class TopicStudentFrame extends javax.swing.JFrame {
         initComponents();
         getContentPane().setBackground(new Color(0xCAE9F5));
         topicsDataManager = new TopicsDatabaseManager(); // Initialize TopicsDatabaseManager
-        initializeData();
+         topicListModel = new DefaultListModel<>(); // Create a model for the JList
+        jList1.setModel(topicListModel); // Set the model for the JList
         jComboBox2.setVisible(false); // Initially hide the section combo box
         jLabel2.setVisible(false); // Hide the section label
-    }
-
-    private void initializeData() {
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{
-            "Java", "Artificial Intelligence", "Software Defined Networks",
-            "Concurrent", "Constitution", "Compiler Design"
-        }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{
-            "Section A", "Section B"
-        }));
-
-        topicListModel = new DefaultListModel<>(); // Create a model for the JList
-        jList1.setModel(topicListModel); // Set the model for the JList
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,14 +63,14 @@ public class TopicStudentFrame extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Section");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Java", "Artificial Intelligence", "Software Defined Networks", "Concurrent", "Constitution", "Compiler Design" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Section A", "Section B" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);

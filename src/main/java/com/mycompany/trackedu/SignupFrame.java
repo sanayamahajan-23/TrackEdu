@@ -254,7 +254,7 @@ public class SignupFrame extends javax.swing.JFrame {
         // TODO add your handling code here:                                         
         String firstName = jTextField1.getText();
         String lastName = jTextField2.getText();
-        String entryNo = jTextField3.getText().toLowerCase();  // Convert entry number to lowercase
+        String entryNo = jTextField3.getText().toLowerCase();  
         String collegeId = jTextField4.getText().toLowerCase();
         String password = new String(jPasswordField1.getPassword());
         String securityQuestion = jComboBox1.getSelectedItem().toString();
@@ -278,7 +278,7 @@ public class SignupFrame extends javax.swing.JFrame {
             stmt.setString(2, lastName);
             stmt.setString(3, entryNo);
             stmt.setString(4, collegeId);
-            stmt.setString(5, password);  // Hash password in a real app
+            stmt.setString(5, password);  
             stmt.setString(6, securityQuestion);
             stmt.setString(7, securityAnswer);
             stmt.setString(8, role);
@@ -290,23 +290,23 @@ public class SignupFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error connecting to the signup database: " + ex.getMessage());
         }
         if ("student".equalsIgnoreCase(role)) {
-                    home homeFrame = new home(entryNo); // Assuming Home is your frame class for students
+                    home homeFrame = new home(entryNo); 
                     homeFrame.setVisible(true);}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+       
         this.dispose();
         LoginFrame frame = new LoginFrame();
         frame.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
+      
          if (jCheckBox1.isSelected()) {
-        jPasswordField1.setEchoChar((char) 0); // Show password
+        jPasswordField1.setEchoChar((char) 0); 
     } else {
-        jPasswordField1.setEchoChar('*'); // Mask password
+        jPasswordField1.setEchoChar('*'); 
     }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 

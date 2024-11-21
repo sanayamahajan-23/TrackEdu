@@ -13,16 +13,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    // Database URL, username, and password
+
     private static final String URL = "jdbc:mysql://localhost:3306/users"; 
     private static final String USERNAME = "root";                  
     private static final String PASSWORD = "admin";                    
 
-    // This method establishes and returns the connection
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            // Attempt to establish a connection
+     
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Database connection successful!");
         } catch (SQLException e) {
@@ -32,7 +31,6 @@ public class DatabaseConnection {
         return connection;
     }
 
-    // Optional: a method to close the connection (useful for cleanup)
     public static void closeConnection(Connection connection) {
         if (connection != null) {
             try {

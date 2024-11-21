@@ -32,10 +32,10 @@ public class ViewMarks extends javax.swing.JFrame {
     }
     private void connectToDatabase() {
         try {
-            // Assuming you're using MySQL and running it locally
-            String url = "jdbc:mysql://localhost:3306/StudentDB";  // Replace with your database name
-            String username = "root";  // Database username
-            String password = "admin";  // Database password
+            
+            String url = "jdbc:mysql://localhost:3306/StudentDB";  
+            String username = "root";  
+            String password = "admin";  
 
             conn = DriverManager.getConnection(url, username, password);
         } catch (SQLException ex) {
@@ -43,13 +43,12 @@ public class ViewMarks extends javax.swing.JFrame {
         }
     }
 
-    // Method to fetch data based on selections
     private void fetchAndDisplayMarks() {
         String subject = (String) jComboBox1.getSelectedItem();
         String section = (String) jComboBox2.getSelectedItem();
         String studentId = jTextField1.getText();
 
-        // SQL query to get the student marks based on subject, section, and student ID
+        
         String query = "SELECT student_id, marks FROM marks WHERE subject = ? AND section = ? AND student_id = ?";
 
         try {

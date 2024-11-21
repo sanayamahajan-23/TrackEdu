@@ -9,7 +9,6 @@ package com.mycompany.trackedu;
  * @author HP
  */
 import java.awt.Color;
-import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +27,6 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void setupForgotPasswordLabel() {
         jLabel3.setForeground(Color.BLUE); 
-        jLabel3.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 openForgotPasswordFrame();
@@ -87,6 +85,7 @@ public class LoginFrame extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Forgot Password?");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +187,7 @@ public class LoginFrame extends javax.swing.JFrame {
        String username = jTextField1.getText();
        String password = new String(jPasswordField1.getPassword());
 
-    // Check if username or password is empty
+   
     if (username.isEmpty() || password.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter both username and password.");
         return;
@@ -203,19 +202,19 @@ public class LoginFrame extends javax.swing.JFrame {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                String role = rs.getString("role"); // Get the role of the user
+                String role = rs.getString("role"); 
                 JOptionPane.showMessageDialog(this, "Login successful as " + role + "!");
 
-                // Here you can redirect the user to the corresponding dashboard
+           
              if ("teacher".equalsIgnoreCase(role)) {
-                    homet homeTFrame = new homet(); // Assuming HomeT is your frame class for teachers
+                    homet homeTFrame = new homet(); 
                     homeTFrame.setVisible(true);
                 } else if ("student".equalsIgnoreCase(role)) {
-                    home homeFrame = new home(username); // Assuming Home is your frame class for students
+                    home homeFrame = new home(username); 
                     homeFrame.setVisible(true);
                 }
 
-                // Close the login frame
+         
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid username or password.");
@@ -228,7 +227,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
    private void openForgotPasswordFrame() {
     try {
-        forgot f = new forgot(); // Assuming forgot() connects to a database or performs DB-related actions.
+        forgot f = new forgot(); 
         f.setVisible(true);
         this.dispose();
     } catch (SQLException e) {
@@ -247,10 +246,10 @@ public class LoginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
             if (jCheckBox1.isSelected()) {
         // Show password
-        jPasswordField1.setEchoChar((char) 0); // Set echo char to 0 to show the password
+        jPasswordField1.setEchoChar((char) 0);
     } else {
-        // Mask password
-        jPasswordField1.setEchoChar('●'); // Set a character to mask the password
+      
+        jPasswordField1.setEchoChar('●'); 
     }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 

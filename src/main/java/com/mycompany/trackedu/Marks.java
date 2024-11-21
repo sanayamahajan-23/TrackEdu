@@ -25,8 +25,8 @@ public class Marks extends javax.swing.JFrame {
      * Creates new form Marks
      */
    private static final String DB_URL = "jdbc:mysql://localhost:3306/StudentDB";
-   private static final String USER = "root"; // Replace with your database username
-   private static final String PASSWORD = "admin"; // Replace with your database password
+   private static final String USER = "root"; 
+   private static final String PASSWORD = "admin"; 
     
     public Marks() {
         initComponents();
@@ -220,7 +220,7 @@ public class Marks extends javax.swing.JFrame {
 
     private void loadTableData() {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Clear existing rows
+    model.setRowCount(0); 
 
     String query = "SELECT student_id, subject, marks FROM marks";
     try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -367,8 +367,12 @@ public class Marks extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-      java.awt.EventQueue.invokeLater(() -> new Marks().setVisible(true));
 
+      java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Marks().setVisible(true);
+            }
+        });
      
     }
 

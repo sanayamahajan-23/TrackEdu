@@ -196,12 +196,12 @@ public class RangeAttend extends javax.swing.JFrame {
     String day1 = (String) jComboBox1.getSelectedItem();
     String month1 = (String) jComboBox2.getSelectedItem();
     String year1 = (String) jComboBox3.getSelectedItem();
-    String startDate = year1 + "-" + month1 + "-" + day1; // Start date in yyyy-MM-dd format
+    String startDate = year1 + "-" + month1 + "-" + day1;
 
-    String day2 = (String) jComboBox4.getSelectedItem(); // Second date fields for end date
+    String day2 = (String) jComboBox4.getSelectedItem(); 
     String month2 = (String) jComboBox5.getSelectedItem();
     String year2 = (String) jComboBox6.getSelectedItem();
-    String endDate = year2 + "-" + month2 + "-" + day2; // End date in yyyy-MM-dd format
+    String endDate = year2 + "-" + month2 + "-" + day2; 
     jLabel6.setText("Attendance from "+startDate +" to "+endDate);
     List<String[]> attendanceRecords = databaseManager.getAttendanceRecordsInRange(username, subject, section, startDate, endDate);
 
