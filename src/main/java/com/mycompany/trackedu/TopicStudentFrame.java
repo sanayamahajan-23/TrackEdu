@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class TopicStudentFrame extends javax.swing.JFrame {
-    private TopicsDatabaseManager topicsDataManager; // Instance of TopicsDataManager
-    private DefaultListModel<String> topicListModel; // Stores topics as String objects
+    private TopicsDatabaseManager topicsDataManager; 
+    private DefaultListModel<String> topicListModel; 
     private String selectedSubject;
     private String username;
     private String selectedSection;
@@ -25,11 +25,11 @@ public class TopicStudentFrame extends javax.swing.JFrame {
     public TopicStudentFrame() {
         initComponents();
         getContentPane().setBackground(new Color(0xCAE9F5));
-        topicsDataManager = new TopicsDatabaseManager(); // Initialize TopicsDatabaseManager
-         topicListModel = new DefaultListModel<>(); // Create a model for the JList
-        jList1.setModel(topicListModel); // Set the model for the JList
-        jComboBox2.setVisible(false); // Initially hide the section combo box
-        jLabel2.setVisible(false); // Hide the section label
+        topicsDataManager = new TopicsDatabaseManager(); 
+         topicListModel = new DefaultListModel<>(); 
+        jList1.setModel(topicListModel);
+        jComboBox2.setVisible(false); 
+        jLabel2.setVisible(false); 
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -170,7 +170,7 @@ public class TopicStudentFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         home h1 = new home(username);
         h1.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
      private void updateTopicList() {
         topicListModel.clear();

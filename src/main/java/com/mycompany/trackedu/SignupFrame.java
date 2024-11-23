@@ -285,13 +285,14 @@ public class SignupFrame extends javax.swing.JFrame {
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(this, "Sign-up successful!");
+              if ("student".equalsIgnoreCase(role)) {
+                    home homeFrame = new home(entryNo); 
+                    homeFrame.setVisible(true);}
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error connecting to the signup database: " + ex.getMessage());
         }
-        if ("student".equalsIgnoreCase(role)) {
-                    home homeFrame = new home(entryNo); 
-                    homeFrame.setVisible(true);}
+      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
