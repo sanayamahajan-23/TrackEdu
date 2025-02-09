@@ -11,19 +11,17 @@ package com.mycompany.trackedu;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.List;
-public class TimetableViewerA extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TimetableViewerA
-     */
-      private JTable table;
+public class TimetableEditorB extends javax.swing.JFrame {
+private JTable table;
     private DefaultTableModel model;
-   private TimetableDatabase db;
-    public TimetableViewerA() {
-        setTitle("Timetable Viewer");
+     private TimetableDatabaseB db;
+    /**
+     * Creates new form TimetableEditorB
+     */
+    public TimetableEditorB() {
+        setTitle("Timetable Editor");
         getContentPane().setBackground(new Color(0xCAE9F5));
         setSize(817, 477);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,8 +37,7 @@ public class TimetableViewerA extends javax.swing.JFrame {
                 // Assuming HomePage is the class for the home page JFrame
                java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                String username = null;
-                new home(username).setVisible(true);
+                new homet().setVisible(true);
             }
         });
                 dispose(); // Close the FileUploader window
@@ -52,36 +49,70 @@ public class TimetableViewerA extends javax.swing.JFrame {
         setJMenuBar(menuBar);
 
         // Initialize Database Connection
-        db = new TimetableDatabase();
-        // Initialize table with column names
-        String[] columns = {"Time Slot", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-        model = new DefaultTableModel(columns, 0);
-        table = new JTable(model);
-        table.setEnabled(false); // Make table non-editable
+         db = new TimetableDatabaseB();
+        initializeTableModel();
+        loadTimetableData();
+        adjustColumnWidths();
 
-        // Populate table with data
-        loadData();
+        JButton saveButton = new JButton("Save Changes");
+        saveButton.addActionListener(e -> saveChanges());
+        add(saveButton, BorderLayout.SOUTH);
+        validate();
+        setVisible(true);
+    }
+private void initializeTableModel() {
+        String[] columns = {"Time Slot", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        model = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column > 0;  // Make cells editable, except for the time slot
+            }
+        };
+           
+        
+         table = new JTable(model);
+         table.setRowHeight(30); // Set row height for cell visibility
+        table.setShowGrid(true); 
+        table.setGridColor(Color.LIGHT_GRAY);  // Add a grid color for clarity
+        table.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    // Set up the table model
-    private void loadData() {
+    // Load timetable data from the database into JTable
+    private void loadTimetableData() {
         List<String[]> timetableData = db.getTimetableData();
-
-        if (timetableData.isEmpty()) {
-            System.out.println("No data available to display.");
-        } else {
-            for (String[] row : timetableData) {
-                model.addRow(row);
+        for (String[] row : timetableData) {
+            model.addRow(row);
+        }
+    }
+     private void adjustColumnWidths() {
+        if (table != null) {
+            // Set preferred column widths for better visibility
+            table.getColumnModel().getColumn(0).setPreferredWidth(100); // Time Slot
+            for (int i = 1; i < table.getColumnCount(); i++) {
+                table.getColumnModel().getColumn(i).setPreferredWidth(150); // Other days
             }
-            System.out.println("Table loaded with " + timetableData.size() + " rows.");
         }
     }
 
-    // Load timetable data from the database into JTable
-     
+    // Save updated data back to the database
+    private void saveChanges() {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String timeSlot = model.getValueAt(i, 0).toString();
+            String monday = model.getValueAt(i, 1).toString();
+            String tuesday = model.getValueAt(i, 2).toString();
+            String wednesday = model.getValueAt(i, 3).toString();
+            String thursday = model.getValueAt(i, 4).toString();
+            String friday = model.getValueAt(i, 5).toString();
 
+            db.updateTimetableData(timeSlot, monday, tuesday, wednesday, thursday, friday);
+        }
+        JOptionPane.showMessageDialog(this, "Changes saved successfully!");
+    
+    
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,30 +122,17 @@ public class TimetableViewerA extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 839, Short.MAX_VALUE)
+            .addGap(0, 886, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
+            .addGap(0, 495, Short.MAX_VALUE)
         );
 
         pack();
@@ -124,14 +142,10 @@ public class TimetableViewerA extends javax.swing.JFrame {
      * @param args the command line arguments
      */
      public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TimetableViewerA viewer = new TimetableViewerA();
-            viewer.setVisible(true);  // Ensure frame is set to visible
-        });
+             SwingUtilities.invokeLater(TimetableEditorB::new);
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

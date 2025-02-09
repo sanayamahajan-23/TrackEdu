@@ -16,8 +16,8 @@ public class TopicsDatabaseManager {
 
     public TopicsDatabaseManager() {
         try {
-            // Setup the connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/topics", "admin", "admin");
+       
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/topics", "root", "admin");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -29,7 +29,7 @@ public class TopicsDatabaseManager {
             stmt.setString(1, subject);
             stmt.setString(2, section);
             stmt.setString(3, topic);
-            return stmt.executeUpdate() > 0; // Returns true if the topic was added
+            return stmt.executeUpdate() > 0; 
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -46,7 +46,7 @@ public class TopicsDatabaseManager {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String topicName = rs.getString("topic");
-                topics.add(new Topic(id, subject, section, topicName)); // Add Topic object to list
+                topics.add(new Topic(id, subject, section, topicName)); 
             }
         } catch (SQLException e) {
             e.printStackTrace();

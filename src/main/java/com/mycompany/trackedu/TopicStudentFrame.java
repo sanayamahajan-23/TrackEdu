@@ -8,15 +8,15 @@ package com.mycompany.trackedu;
  *
  * @author HP
  */
-import java.awt.Toolkit;
+import java.awt.Color;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class TopicStudentFrame extends javax.swing.JFrame {
-    private TopicsDatabaseManager topicsDataManager; // Instance of TopicsDataManager
-    private DefaultListModel<String> topicListModel; // Stores topics as String objects
+    private TopicsDatabaseManager topicsDataManager; 
+    private DefaultListModel<String> topicListModel; 
     private String selectedSubject;
+    private String username;
     private String selectedSection;
 
     /**
@@ -24,24 +24,12 @@ public class TopicStudentFrame extends javax.swing.JFrame {
      */
     public TopicStudentFrame() {
         initComponents();
-        topicsDataManager = new TopicsDatabaseManager(); // Initialize TopicsDatabaseManager
-        initializeData();
-        jComboBox2.setVisible(false); // Initially hide the section combo box
-        jLabel2.setVisible(false); // Hide the section label
-    }
-
-    private void initializeData() {
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{
-            "Java", "Artificial Intelligence", "Software Defined Networks",
-            "Concurrent", "Constitution", "Compiler Design"
-        }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{
-            "Section A", "Section B"
-        }));
-
-        topicListModel = new DefaultListModel<>(); // Create a model for the JList
-        jList1.setModel(topicListModel); // Set the model for the JList
+        getContentPane().setBackground(new Color(0xCAE9F5));
+        topicsDataManager = new TopicsDatabaseManager(); 
+         topicListModel = new DefaultListModel<>(); 
+        jList1.setModel(topicListModel);
+        jComboBox2.setVisible(false); 
+        jLabel2.setVisible(false); 
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,24 +57,28 @@ public class TopicStudentFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Subject");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Section");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Java", "Artificial Intelligence", "Software Defined Networks", "Concurrent", "Constitution", "Compiler Design" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Section A", "Section B" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
             }
         });
 
+        jList1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jList1.setForeground(new java.awt.Color(51, 0, 51));
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -118,15 +110,15 @@ public class TopicStudentFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(176, 176, 176)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(89, 89, 89))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox1, 0, 268, Short.MAX_VALUE)
+                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 86, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
@@ -135,13 +127,13 @@ public class TopicStudentFrame extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,9 +168,9 @@ public class TopicStudentFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        home h1 = new home();
+        home h1 = new home(username);
         h1.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
      private void updateTopicList() {
         topicListModel.clear();
@@ -224,13 +216,7 @@ public class TopicStudentFrame extends javax.swing.JFrame {
          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  TopicStudentFrame frame = new TopicStudentFrame();
-
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            int width = toolkit.getScreenSize().width;
-            int height = toolkit.getScreenSize().height;
-
-            frame.setSize(width , height);
-            frame.setVisible(true);
+                 frame.setVisible(true);
             }
         });
     }

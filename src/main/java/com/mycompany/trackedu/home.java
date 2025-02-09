@@ -4,17 +4,27 @@
  */
 package com.mycompany.trackedu;
 
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author divya
  */
 public class home extends javax.swing.JFrame {
+    private static String username;
 
     /**
      * Creates new form home
      */
-    public home() {
+    public home(String username) {
+        this.username = username; 
+        
         initComponents();
+        jPanel1.setBackground(new Color(0xCAE9F5));
     }
 
     /**
@@ -45,10 +55,10 @@ public class home extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setForeground(new java.awt.Color(0, 102, 255));
         jLabel1.setText("HOME PAGE");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -66,7 +76,7 @@ public class home extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Topics");
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 51));
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Click here");
@@ -76,22 +86,37 @@ public class home extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 0, 51));
+        jButton2.setBackground(new java.awt.Color(0, 153, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Click here");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(255, 0, 51));
+        jButton3.setBackground(new java.awt.Color(0, 153, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Click here");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jButton4.setBackground(new java.awt.Color(255, 0, 51));
+        jButton4.setBackground(new java.awt.Color(0, 153, 255));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Click here");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jButton5.setBackground(new java.awt.Color(255, 0, 51));
+        jButton5.setBackground(new java.awt.Color(0, 153, 255));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Click here");
@@ -161,6 +186,8 @@ public class home extends javax.swing.JFrame {
                 .addContainerGap(116, Short.MAX_VALUE))
         );
 
+        jMenuBar1.setBackground(new java.awt.Color(204, 255, 255));
+
         jMenu1.setText("Menu");
 
         jMenuItem1.setText("Update Password");
@@ -199,6 +226,8 @@ public class home extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        StAttendance frame = new StAttendance(username);
+        frame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -210,7 +239,7 @@ public class home extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-           this.dispose(); // This will close the current homet frame
+        this.dispose(); // This will close the current homet frame
     
     // Open the login frame (assuming you have a LoginFrame class)
     LoginFrame loginFrame = new LoginFrame(); // Create an instance of your login frame
@@ -219,10 +248,39 @@ public class home extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        updatepassword update = new updatepassword();
+          updatepassword update = null;
+        try {
+            update = new updatepassword();
+        } catch (SQLException ex) {
+            Logger.getLogger(homet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         update.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TimetableChooserS().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        SwingUtilities.invokeLater(() -> {
+            FileViewer fileViewer = new FileViewer();
+            fileViewer.setVisible(true);
+        });
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    ViewMarks m=new ViewMarks();
+    m.setVisible(true);
+    this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,7 +312,7 @@ public class home extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new home().setVisible(true);
+                new home(username).setVisible(true);
             }
         });
     }

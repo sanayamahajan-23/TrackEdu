@@ -8,6 +8,7 @@ package com.mycompany.trackedu;
  *
  * @author divya
  */
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,14 +23,19 @@ public class updatepassword extends javax.swing.JFrame {
     /**
      * Creates new form updatepassword
      */
-    public updatepassword() {
+    public updatepassword() throws SQLException {
         initComponents();
-        try{
-        Class.forName("con.mysql.cj.jdbc.Driver");
-        //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/email", "root", "admin");
-            }
-        catch(ClassNotFoundException ex){
-            Logger.getLogger(forgot.class.getName()).log(Level.SEVERE,null,ex);
+         jPanel1.setBackground(new Color(0xCAE9F5));
+        try {
+            // Corrected driver name
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "admin");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Database driver not found.");
+        } catch (SQLException ex) {
+            Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Database connection failed.");
         }
     }
 
@@ -58,26 +64,20 @@ public class updatepassword extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 102, 255));
         jLabel1.setText("UPDATE PASSWORD");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Email ID");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Old Password");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("New password");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Confirm Password");
 
         txtemailid.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +86,7 @@ public class updatepassword extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(153, 0, 0));
+        jButton2.setBackground(new java.awt.Color(51, 255, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Submit");
@@ -96,7 +96,7 @@ public class updatepassword extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(153, 0, 0));
+        jButton3.setBackground(new java.awt.Color(255, 0, 51));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Cancel");
@@ -106,7 +106,7 @@ public class updatepassword extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(153, 0, 0));
+        jButton4.setBackground(new java.awt.Color(0, 153, 255));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Back to Login page");
@@ -216,9 +216,9 @@ public class updatepassword extends javax.swing.JFrame {
             return;
         }
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://DATABASE_URL", "USERNAME", "PASSWORD")) {
+        try  {
             // Verify old password
-            String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String query = "SELECT * FROM users WHERE college_email = ? AND password = ?";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, email);
             pst.setString(2, oldPassword);
@@ -226,8 +226,8 @@ public class updatepassword extends javax.swing.JFrame {
 
             if (rs.next()) {
                 // Update password
-                String updateQuery = "UPDATE users SET password = ? WHERE email = ?";
-                PreparedStatement updatePst = conn.prepareStatement(updateQuery);
+                String updateQuery = "UPDATE users SET password = ? WHERE college_email = ?";
+                PreparedStatement updatePst = con.prepareStatement(updateQuery);
                 updatePst.setString(1, newPassword);
                 updatePst.setString(2, email);
                 int rowsUpdated = updatePst.executeUpdate();
@@ -243,6 +243,7 @@ public class updatepassword extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
+             Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Database connection error.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -253,7 +254,7 @@ public class updatepassword extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        //new login().setVisible(true);
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -293,7 +294,11 @@ public class updatepassword extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new updatepassword().setVisible(true);
+            try {
+                new updatepassword().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(updatepassword.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 

@@ -11,100 +11,114 @@ package com.mycompany.trackedu;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.*;
+import java.awt.event.*;
+import java.util.List;
 public class TimetableEditorA extends javax.swing.JFrame {
     private JTable table;
     private DefaultTableModel model;
-    private Connection conn;
+     private TimetableDatabase db;
     /**
      * Creates new form TimetableEditorA
      */
     public TimetableEditorA() {
          setTitle("Timetable Editor");
+         getContentPane().setBackground(new Color(0xCAE9F5));
         setSize(817, 477);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Menu");
+        JMenuItem backItem = new JMenuItem("Back");
 
-        // Initialize Database Connection
-        connectToDatabase();
-
-        // Column headers
-        String[] columns = {"Time Slot", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-        
-        // Retrieve data from the database
-        model = new DefaultTableModel(columns, 0);
-        loadTimetableData();
-
-        // Initialize table with model
-        table = new JTable(model);
-        table.setFillsViewportHeight(true);
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);
-
-        // Save button
-        JButton saveButton = new JButton("Save Changes");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
+        // Add action for "Back" menu item
+        backItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveTimetableData();
+                // Code to go back to the home page
+                // Assuming HomePage is the class for the home page JFrame
+               java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new homet().setVisible(true);
             }
         });
+                dispose(); // Close the FileUploader window
+            }
+        });
+
+        menu.add(backItem);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
+
+        // Initialize Database Connection
+         db = new TimetableDatabase();
+        initializeTableModel();
+        loadTimetableData();
+        adjustColumnWidths();
+
+        JButton saveButton = new JButton("Save Changes");
+        saveButton.addActionListener(e -> saveChanges());
         add(saveButton, BorderLayout.SOUTH);
+        validate();
+        setVisible(true);
+        
+
     }
 
     // Connect to the database
-    private void connectToDatabase() {
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/college", "root", "admin");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Database connection failed.");
-        }
+        private void initializeTableModel() {
+        String[] columns = {"Time Slot", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        model = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column > 0;  // Make cells editable, except for the time slot
+            }
+        };
+           
+        
+         table = new JTable(model);
+         table.setRowHeight(30); // Set row height for cell visibility
+        table.setShowGrid(true); 
+        table.setGridColor(Color.LIGHT_GRAY);  // Add a grid color for clarity
+        table.setFillsViewportHeight(true);
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     // Load timetable data from the database into JTable
     private void loadTimetableData() {
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("SELECT * FROM timetableA");
-            while (rs.next()) {
-                String[] row = {
-                    rs.getString("time_slot"),
-                    rs.getString("monday"),
-                    rs.getString("tuesday"),
-                    rs.getString("wednesday"),
-                    rs.getString("thursday"),
-                    rs.getString("friday")
-                };
-                model.addRow(row);
+        List<String[]> timetableData = db.getTimetableData();
+        for (String[] row : timetableData) {
+            model.addRow(row);
+        }
+    }
+     private void adjustColumnWidths() {
+        if (table != null) {
+            // Set preferred column widths for better visibility
+            table.getColumnModel().getColumn(0).setPreferredWidth(100); // Time Slot
+            for (int i = 1; i < table.getColumnCount(); i++) {
+                table.getColumnModel().getColumn(i).setPreferredWidth(150); // Other days
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     // Save updated data back to the database
-    private void saveTimetableData() {
-        try (PreparedStatement ps = conn.prepareStatement(
-                "UPDATE timetableA SET monday = ?, tuesday = ?, wednesday = ?, thursday = ?, friday = ? WHERE time_slot = ?")) {
-            for (int row = 0; row < model.getRowCount(); row++) {
-                ps.setString(1, (String) model.getValueAt(row, 1));
-                ps.setString(2, (String) model.getValueAt(row, 2));
-                ps.setString(3, (String) model.getValueAt(row, 3));
-                ps.setString(4, (String) model.getValueAt(row, 4));
-                ps.setString(5, (String) model.getValueAt(row, 5));
-                ps.setString(6, (String) model.getValueAt(row, 0));
-                ps.executeUpdate();
-            }
-            JOptionPane.showMessageDialog(this, "Changes saved to database.");
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private void saveChanges() {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String timeSlot = model.getValueAt(i, 0).toString();
+            String monday = model.getValueAt(i, 1).toString();
+            String tuesday = model.getValueAt(i, 2).toString();
+            String wednesday = model.getValueAt(i, 3).toString();
+            String thursday = model.getValueAt(i, 4).toString();
+            String friday = model.getValueAt(i, 5).toString();
+
+            db.updateTimetableData(timeSlot, monday, tuesday, wednesday, thursday, friday);
         }
+        JOptionPane.showMessageDialog(this, "Changes saved successfully!");
     
     
-        initComponents();
+        
     }
+    // Example of adding a new row in TimetableEditorA
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,11 +135,11 @@ public class TimetableEditorA extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 774, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 515, Short.MAX_VALUE)
         );
 
         pack();
@@ -135,11 +149,10 @@ public class TimetableEditorA extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new TimetableEditorA().setVisible(true);
-        });
+             SwingUtilities.invokeLater(TimetableEditorA::new);
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
